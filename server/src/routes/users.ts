@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import User from "../models/UserType";
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
+
 const router = express.Router();
 
 router.post(
@@ -9,7 +10,6 @@ router.post(
   [
     check("firstName", "First Name is required").isString(),
     check("lastName", "Last Name is required").isString(),
-    check("email", "Email is required").isEmail(),
     check("email", "Email is required").isEmail(),
     check(
       "password",
@@ -40,7 +40,7 @@ router.post(
       res.cookie("auth_Token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "Production",
-        maxAge: 86500000,
+        maxAge: 86500000, //1d
       });
       return res.sendStatus(200);
     } catch (error) {

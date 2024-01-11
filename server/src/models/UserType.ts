@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 export type UserType = {
-  _id: String;
-  email: String;
-  password: String;
-  firstName: String;
-  lastName: String;
+  _id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
 };
 
 const userSchema = new mongoose.Schema({
