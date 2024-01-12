@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as apiClient from "../api-clients";
+
+// type of data going to store  in form
 export type RegisterFormData = {
   firstName: string;
   lastName: string;
@@ -8,16 +10,18 @@ export type RegisterFormData = {
   password: string;
   confirmPassword: string;
 };
-// react query state management
 const Register = () => {
+  // from react-hook-form  aka usefrom component
   const {
     register,
     watch,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>();
-
+  // state mangement is done here
   const mutation = useMutation(apiClient.register, {
+    // base on the success or error we are going to send the message according
+
     // on sucess
     onSuccess: () => {
       console.log("Registration successfully");
@@ -27,6 +31,7 @@ const Register = () => {
     },
   });
   const onSubmit = handleSubmit((data) => {
+    // updating the state using mutation
     mutation.mutate(data);
     // console.log(data);
   });
@@ -38,6 +43,7 @@ const Register = () => {
           First Name
           <input
             className="border rounded w-full py-1 px-2 font-normal"
+            // for error message destruction register,then find target name then add required message, it will appear only if there is error
             {...register("firstName", {
               required: "This is field is required",
             })}
@@ -95,9 +101,11 @@ const Register = () => {
           type="password"
           className="border rounded w-full py-1 px-2 font-normal"
           {...register("confirmPassword", {
+            // matching confirm password and password
             validate: (value) => {
               if (!value) {
                 return "This is field is required";
+                // watch means to compare the password and confirm password
               } else if (watch("password") !== value) {
                 return "Your password do no match";
               }

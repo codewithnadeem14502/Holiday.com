@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+// In React Query, queryClient is a central manager that handles the state of data queries and mutations in your application. It's used to initiate queries, manage their lifecycle, and store their results globally.
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -13,6 +13,7 @@ const queryClient = new QueryClient({
 });
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    {/* add provider along with the client  */}
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
