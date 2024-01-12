@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import User from "../models/UserType";
+import User from "../models/User";
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
 
@@ -42,7 +42,7 @@ router.post(
         secure: process.env.NODE_ENV === "Production",
         maxAge: 86500000, //1d
       });
-      return res.sendStatus(200);
+      return res.status(200).send({ message: "User Register OK" });
     } catch (error) {
       console.log(error);
       res.status(500).send({ message: "Something went wrong" });
