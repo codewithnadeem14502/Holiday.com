@@ -1,20 +1,30 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
-import "dotenv/config";
 import mongoose from "mongoose";
+import "dotenv/config";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
-mongoose.connect(process.env.MONGODB_URL as string);
+import cookieparser from "cookie-parser";
+const MONGODB_URL = process.env.MONGODB_URL as string;
+const PORT = process.env.PORT || 5000;
+
+mongoose.connect(MONGODB_URL);
 
 const app = express();
-
+app.use(cookieparser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEN_URL,
+    credentials: true,
+  })
+);
+
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
-app.listen(7000, () => {
-  console.log("server is running on localhost:7000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

@@ -41,7 +41,7 @@ router.post(
         { expiresIn: "1d" }
       );
       // send cookies with name,token and along with condition and maxage
-      res.cookie("auth_Token", token, {
+      res.cookie("auth_token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "Production",
         maxAge: 86500000, //1d
