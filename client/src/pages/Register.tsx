@@ -29,7 +29,7 @@ const Register = () => {
 
     // on sucess
     onSuccess: async () => {
-      showToast({ message: "Registration successfully!", type: "SUCCESS" });
+      showToast({ message: "Registration Successfully!", type: "SUCCESS" });
       await queryClient.invalidateQueries("validateToken");
       navigate("/");
     },

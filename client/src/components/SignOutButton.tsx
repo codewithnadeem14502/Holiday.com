@@ -21,7 +21,7 @@ const SignOutButton = () => {
       className="flex  bg-white items-center text-blue-600 px-3 font-bold rounded-lg hover:bg-gray-100"
       onClick={handleSignOut}
     >
-      Signout
+      Sign out
     </button>
   );
 };

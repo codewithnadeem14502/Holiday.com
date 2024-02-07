@@ -5,10 +5,13 @@ import "dotenv/config";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import cookieparser from "cookie-parser";
-const MONGODB_URL = process.env.MONGODB_URL as string;
-const PORT = process.env.PORT || 5000;
 
-mongoose.connect(MONGODB_URL);
+// const MONGODB_URL = process.env.MONGODB_CONNECTION_STRING as string;
+const PORT = process.env.PORT;
+
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
+  console.log("Database is connected");
+});
 
 const app = express();
 app.use(cookieparser());
