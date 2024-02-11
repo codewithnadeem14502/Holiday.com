@@ -5,6 +5,7 @@ import "dotenv/config";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import cookieparser from "cookie-parser";
+import path from "path";
 
 // const MONGODB_URL = process.env.MONGODB_CONNECTION_STRING as string;
 const PORT = process.env.PORT;
@@ -23,8 +24,9 @@ app.use(
     credentials: true,
   })
 );
-
-// routes
+// static point
+app.use(express.static(path.join(__dirname, "../../client/dist")));
+// routes end points
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
