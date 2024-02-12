@@ -29,7 +29,7 @@ const DetailsSection = () => {
           <input
             type="text"
             className="border rounded w-full py-1 px-2 font-normal"
-            {...register("name", {
+            {...register("city", {
               required: "This is field is required",
             })}
           />
@@ -42,7 +42,7 @@ const DetailsSection = () => {
           <input
             type="text"
             className="border rounded w-full py-1 px-2 font-normal"
-            {...register("name", {
+            {...register("country", {
               required: "This is field is required",
             })}
           />
@@ -56,7 +56,7 @@ const DetailsSection = () => {
         <textarea
           rows={10}
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register("name", {
+          {...register("description", {
             required: "This is field is required",
           })}
         ></textarea>
@@ -70,7 +70,7 @@ const DetailsSection = () => {
           type="number"
           min={1}
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register("name", {
+          {...register("pricePerNight", {
             required: "This is field is required",
           })}
         />

@@ -12,7 +12,7 @@ const PORT = 3000;
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  api_secret: process.env.CLOUDINARY_SECRET,
 });
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
