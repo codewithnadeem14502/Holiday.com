@@ -10,12 +10,12 @@ test("should allow the user to sign in", async ({ page }) => {
 
   await expect(page.getByRole("heading", { name: "Sign In" })).toBeVisible();
 
-  await page.locator("[name=email]").fill("h@gmail.com");
-  await page.locator("[name=password]").fill("123456789");
+  await page.locator("[name=email]").fill("1123@gmail.com");
+  await page.locator("[name=password]").fill("11231123");
 
   await page.getByRole("button", { name: "Log in" }).click();
 
-  await expect(page.getByText("login Successfully")).toBeVisible();
+  await expect(page.getByText("Login Successfully")).toBeVisible();
   await expect(page.getByRole("link", { name: "My Bookings" })).toBeVisible();
   await expect(page.getByRole("link", { name: "My Hotels" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Sign out" })).toBeVisible();
