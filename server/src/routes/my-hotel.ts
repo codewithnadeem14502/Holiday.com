@@ -1,7 +1,8 @@
 import express, { Request, Response } from "express";
 import multer from "multer";
 import cloudinary from "cloudinary";
-import Hotel, { HotelType } from "../models/hotel";
+import Hotel from "../models/hotel";
+import { HotelType } from "../shared/types";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
 const router = express.Router();
@@ -14,7 +15,7 @@ const upload = multer({
     fileSize: 5 * 1024 * 1024, //5MB
   },
 });
-//api/my-hotels
+//api/add-hotels
 router.post(
   "/",
   verifyToken,
@@ -74,7 +75,7 @@ router.post(
     }
   }
 );
-
+//api/get-hotels
 router.get("/", verifyToken, async (req: Request, res: Response) => {
   try {
     const hotels = await Hotel.find({ userId: req.userId });
