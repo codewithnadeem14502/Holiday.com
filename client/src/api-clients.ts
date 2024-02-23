@@ -1,7 +1,7 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 // converting vite url to server url
-import { HotelType } from "../../server/src/shared/types";
+import { HotelSearchResponse, HotelType } from "../../server/src/shared/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -113,4 +113,34 @@ export const updateMyHotelById = async (hotelFromData: FormData) => {
   }
 
   return resposne.json();
+};
+
+export type SearchParams = {
+  destination: string;
+  checkIn: string;
+  checkOut: string;
+  adultCount: string;
+  childCount: string;
+  page: string;
+};
+
+export const SearchHotels = async (
+  SearchParams: SearchParams
+): Promise<HotelSearchResponse> => {
+  const queryParams = new URLSearchParams();
+  queryParams.append("destination", SearchParams.destination || " ");
+  queryParams.append("checkIn", SearchParams.checkIn || " ");
+  queryParams.append("checkOut", SearchParams.checkOut || " ");
+  queryParams.append("adultCount", SearchParams.adultCount || " ");
+  queryParams.append("childCount", SearchParams.childCount || " ");
+  queryParams.append("page", SearchParams.page || " ");
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/search?${queryParams}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Error fetching hotels");
+  }
+  return response.json();
 };
