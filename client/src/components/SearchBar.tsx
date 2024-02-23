@@ -7,6 +7,14 @@ import { useNavigate } from "react-router-dom";
 const SearchBar = () => {
   const navigate = useNavigate();
   const search = useSearchContext();
+
+  // Define initial values for state
+  const initialDestination = search.destination;
+  const initialCheckIn = search.checkIn;
+  const initialCheckOut = search.checkOut;
+  const initialAdultCount = search.adultCount;
+  const initialChildCount = search.childCount;
+
   const [destination, setDestination] = useState<string>(search.destination);
   const [checkIn, setCheckIn] = useState<Date>(search.checkIn);
   const [checkOut, setCheckOut] = useState<Date>(search.checkOut);
@@ -24,7 +32,14 @@ const SearchBar = () => {
     );
     navigate("/search");
   };
-
+  const handleClear = () => {
+    // Reset state values to initial values
+    setDestination(initialDestination);
+    setCheckIn(initialCheckIn);
+    setCheckOut(initialCheckOut);
+    setAdultCount(initialAdultCount);
+    setChildCount(initialChildCount);
+  };
   const minDate = new Date();
   const maxDate = new Date();
 
@@ -100,7 +115,10 @@ const SearchBar = () => {
         <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500">
           Search
         </button>
-        <button className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500">
+        <button
+          onClick={handleClear}
+          className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500"
+        >
           Clear
         </button>
       </div>
