@@ -10,6 +10,7 @@ import { v2 as cloudinary } from "cloudinary";
 import myHotelsRoutes from "./routes/my-hotel";
 import hotelRoutes from "./routes/hotels";
 const PORT = 3000;
+import bookingRoutes from "./routes/my-bookings";
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -37,7 +38,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/my-hotels", myHotelsRoutes);
 app.use("/api/hotels", hotelRoutes);
-
+app.use("/api/my-bookings", bookingRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
