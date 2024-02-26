@@ -8,13 +8,6 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const search = useSearchContext();
 
-  // Define initial values for state
-  const initialDestination = search.destination;
-  const initialCheckIn = search.checkIn;
-  const initialCheckOut = search.checkOut;
-  const initialAdultCount = search.adultCount;
-  const initialChildCount = search.childCount;
-
   const [destination, setDestination] = useState<string>(search.destination);
   const [checkIn, setCheckIn] = useState<Date>(search.checkIn);
   const [checkOut, setCheckOut] = useState<Date>(search.checkOut);
@@ -34,11 +27,11 @@ const SearchBar = () => {
   };
   const handleClear = () => {
     // Reset state values to initial values
-    setDestination(initialDestination);
-    setCheckIn(initialCheckIn);
-    setCheckOut(initialCheckOut);
-    setAdultCount(initialAdultCount);
-    setChildCount(initialChildCount);
+    setDestination("");
+    setCheckIn(new Date());
+    setCheckOut(new Date());
+    setAdultCount(1);
+    setChildCount(0);
   };
   const minDate = new Date();
   const maxDate = new Date();
