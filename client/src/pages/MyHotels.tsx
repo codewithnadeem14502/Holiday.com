@@ -41,7 +41,7 @@ const MyHotels = () => {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 p-2 md:p-0">
       <span className="flex justify-between">
         <h1 className="text-3xl font-bold">My Hotels</h1>
         <Link
@@ -59,7 +59,7 @@ const MyHotels = () => {
           >
             <h2 className="text-2xl font-bold">{hotel.name}</h2>
             <div className="whitespace-pre-line">{hotel.description}</div>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
               <div className="border border-slate-300 rounded-sm p-3 flex items-center">
                 <BsMap className="mr-1" />
                 {hotel.city}, {hotel.country}

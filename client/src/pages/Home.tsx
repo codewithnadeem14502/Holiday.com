@@ -11,7 +11,7 @@ const Home = () => {
   const bottomRowHotels = hotels?.slice(2) || [];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 p-2">
       <h2 className="text-3xl font-bold">Latest Destinations</h2>
       <p>Most recent desinations added by our hosts</p>
       <div className="grid gap-4">
