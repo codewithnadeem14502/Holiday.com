@@ -1,19 +1,45 @@
-import { useQuery } from "react-query";
+import { useEffect } from "react";
+import { useMutation, useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import * as apiClient from "../api-clients";
 import { BsBuilding, BsMap } from "react-icons/bs";
 import { BiHotel, BiMoney, BiStar } from "react-icons/bi";
+import { useAppContext } from "../contexts/AppContext";
+
 const MyHotels = () => {
-  const { data: hotelData } = useQuery(
+  const { showToast } = useAppContext();
+
+  const { data: hotelData, refetch } = useQuery(
     "fetchMyHotels",
     apiClient.fetchMyHotels,
     {
       onError: () => {},
     }
   );
+
+  const deleteHotel = useMutation(apiClient.deleteMyHotelById, {
+    onSuccess: () => {
+      showToast({ message: "Hotel Deleted!", type: "SUCCESS" });
+    },
+    onError: () => {
+      showToast({ message: "Error Deleting Hotel", type: "ERROR" });
+    },
+  });
+
+  useEffect(() => {
+    if (deleteHotel.isSuccess) {
+      refetch();
+    }
+  }, [deleteHotel.isSuccess, refetch]);
+
+  const handleDelete = (hotelId: string) => {
+    deleteHotel.mutate(hotelId);
+  };
+
   if (!hotelData) {
     return <span>No Hotel Found</span>;
   }
+
   return (
     <div className="space-y-5">
       <span className="flex justify-between">
@@ -28,7 +54,7 @@ const MyHotels = () => {
       <div className="grid grid-cols-1 gap-8">
         {hotelData.map((hotel) => (
           <div
-            data-testid="hotel-card"
+            key={hotel._id}
             className="flex flex-col justify-between border border-slate-300 rounded-lg p-8 gap-5"
           >
             <h2 className="text-2xl font-bold">{hotel.name}</h2>
@@ -54,18 +80,25 @@ const MyHotels = () => {
                 {hotel.starRating} Star Rating
               </div>
             </div>
-            <span className="flex justify-end">
+            <div className="flex justify-between items-center">
               <Link
                 to={`/edit-hotel/${hotel._id}`}
                 className="flex bg-blue-600 text-white text-xl font-bold p-2 hover:bg-blue-500 rounded-lg"
               >
                 View Details
               </Link>
-            </span>
+              <button
+                onClick={() => handleDelete(hotel._id)}
+                className="flex bg-red-600 text-white text-xl font-bold p-2 hover:bg-red-500 rounded-lg"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
     </div>
   );
 };
+
 export default MyHotels;

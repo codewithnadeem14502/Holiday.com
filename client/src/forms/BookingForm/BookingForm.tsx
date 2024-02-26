@@ -6,7 +6,7 @@ import {
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElement } from "@stripe/stripe-js";
 import { useSearchContext } from "../../contexts/SearchContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import * as apiClient from "../../api-clients";
 import { useAppContext } from "../../contexts/AppContext";
@@ -37,7 +37,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const { hotelId } = useParams<{ hotelId: string }>();
 
   const { showToast } = useAppContext();
-
+  const Navigate = useNavigate();
   const { mutate: bookRoom, isLoading } = useMutation(
     apiClient.createRoomBooking,
     {
@@ -103,6 +103,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
       if (result.paymentIntent?.status === "succeeded") {
         console.log("Booking confirmed");
         bookRoom({ ...formData, paymentIntentId: result.paymentIntent.id });
+        Navigate("/my-bookings");
       }
     } catch (error) {
       console.error("Error confirming payment:", error);

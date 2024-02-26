@@ -116,6 +116,21 @@ router.put(
     }
   }
 );
+router.delete("/:hotelId", verifyToken, async (req: Request, res: Response) => {
+  try {
+    const hotel = await Hotel.findOneAndDelete({
+      _id: req.params.hotelId,
+      userId: req.userId,
+    });
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
+    res.json({ message: "Hotel deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+});
 
 async function uploadImages(imageFiles: Express.Multer.File[]) {
   const uploadPromises = imageFiles.map(async (image) => {
