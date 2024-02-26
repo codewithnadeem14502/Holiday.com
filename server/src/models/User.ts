@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-
-// create a type for user data
-export type UserType = {
-  _id: string;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-};
+import { UserType } from "../shared/types";
 
 // userschema is created here
 
