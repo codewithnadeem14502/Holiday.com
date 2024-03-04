@@ -1,5 +1,5 @@
 import { HotelType } from "../../../server/src/shared/types";
-
+// import React from "react";
 type Props = {
   checkIn: Date;
   checkOut: Date;
