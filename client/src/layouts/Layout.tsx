@@ -4,7 +4,7 @@ import Hero from "../components/Hero";
 import SearchBar from "../components/SearchBar";
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Layout = ({ children }: Props) => {
