@@ -39,6 +39,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/my-hotels", myHotelsRoutes);
 app.use("/api/hotels", hotelRoutes);
 app.use("/api/my-bookings", bookingRoutes);
+
+app.use(express.static(path.join(__dirname, "../../client/dist")));
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
