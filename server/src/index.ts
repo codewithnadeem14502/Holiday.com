@@ -40,9 +40,9 @@ app.use("/api/my-hotels", myHotelsRoutes);
 app.use("/api/hotels", hotelRoutes);
 app.use("/api/my-bookings", bookingRoutes);
 
-app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
-});
+// app.get("*", (req: Request, res: Response) => {
+//   res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
