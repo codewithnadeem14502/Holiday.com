@@ -1,5 +1,13 @@
 # Setting Up the MERN Booking App
 
+Demo Video
+
+
+
+https://github.com/codewithnadeem14502/Holiday.com/assets/105824474/3285b26c-a7b1-4e70-ab4f-83d3da44a3cb
+
+
+
 This guide will walk you through the process of setting up the MERN Booking App on your local machine.
 
 ## Prerequisites
