@@ -99,7 +99,7 @@ const App = () => {
               }
             />
             <Route
-              path="/my-bookings"
+              path="/my-booking"
               element={
                 <Layout>
                   <MyBookings />

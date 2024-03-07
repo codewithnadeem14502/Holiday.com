@@ -94,7 +94,7 @@ const Search = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-5 p-5">
+      <div className="flex flex-col gap-5 p-2">
         <div className="flex justify-between items-center">
           <span className="text-xl font-bold">
             {hotelData?.pagination.total} Hotels found

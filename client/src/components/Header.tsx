@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import { FaBars, FaTimes } from "react-icons/fa";
+import SignOutButton from "./SignOutButton";
 
 interface HeaderProps {}
 
@@ -20,7 +21,7 @@ const Header: React.FC<HeaderProps> = () => {
 
   return (
     <div className="bg-blue-800 py-6">
-      <div className="container mx-auto flex justify-between items-center px-2">
+      <div className="container mx-auto flex justify-between">
         <span className="text-3xl text-white font-bold tracking-tight">
           <Link to="/">Holidays.com</Link>
         </span>
@@ -89,12 +90,14 @@ const Header: React.FC<HeaderProps> = () => {
               >
                 My Hotels
               </Link>
-              <button
+              {/* <button
                 onClick={handleSignOut}
                 className="flex bg-white items-center text-blue-600 px-3 font-bold rounded-lg hover:bg-gray-100"
               >
                 Sign Out
-              </button>
+              
+              </button> */}
+              <SignOutButton />
             </>
           ) : (
             <Link

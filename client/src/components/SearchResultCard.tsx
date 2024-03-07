@@ -20,7 +20,7 @@ const SearchResultsCard = ({ hotel }: Props) => {
           />
         </Link>
       </div>
-      <div className="grid grid-rows-[1fr_2fr_1fr]">
+      <div className="grid grid-rows-[1fr_1fr_2fr]">
         <div>
           <div className="flex items-center">
             <span className="flex">
@@ -42,7 +42,7 @@ const SearchResultsCard = ({ hotel }: Props) => {
           <div className="line-clamp-4">{hotel.description}</div>
         </div>
 
-        <div className="grid grid-cols-1  md:grid-cols-2 items-end whitespace-nowrap">
+        <div className="grid grid-cols-1  md:grid-cols-1 items-end whitespace-nowrap">
           <div className="flex gap-1 items-center">
             {hotel.facilities.slice(0, 3).map((facility) => (
               <span className="bg-slate-300 p-2 rounded-lg font-bold text-xs whitespace-nowrap">

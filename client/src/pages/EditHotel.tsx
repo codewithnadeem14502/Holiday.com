@@ -28,7 +28,10 @@ const EditHotel = () => {
     mutate(hotelFromData);
   };
   return (
-    <MangeHotelForm hotel={hotel} onSave={handleSave} isLoading={isLoading} />
+    <div>
+      <h1 className="text-xl  md:text-3xl  font-bold">Edit Hotel</h1>
+      <MangeHotelForm hotel={hotel} onSave={handleSave} isLoading={isLoading} />
+    </div>
   );
 };
 export default EditHotel;
