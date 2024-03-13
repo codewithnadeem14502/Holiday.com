@@ -20,6 +20,7 @@ const SignIn = () => {
     register,
     formState: { errors },
     handleSubmit,
+    setValue, // Added for setting form values
   } = useForm<SignInFormData>();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,6 +42,14 @@ const SignIn = () => {
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });
+
+  const handleTestLogin = () => {
+    // Set predefined email and password values
+    setValue("email", "founders@gmail.com");
+    setValue("password", "1234567890");
+    // Trigger form submission
+    onSubmit();
+  };
 
   return (
     <form
@@ -96,12 +105,23 @@ const SignIn = () => {
             Create an account here
           </Link>
         </span>
-        <button
-          type="submit"
-          className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
-        >
-          Log in
-        </button>
+        <div>
+          {/* Test login button */}
+          <button
+            type="button"
+            className="bg-orange-600 text-white p-2 mr-5 font-bold hover:bg-orange-500 text-xl rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+            onClick={handleTestLogin}
+          >
+            Test Login
+          </button>
+
+          <button
+            type="submit"
+            className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+          >
+            Log in
+          </button>
+        </div>
       </span>
     </form>
   );
