@@ -32,7 +32,7 @@ app.use(
   })
 );
 // static point
-app.use(express.static(path.join(__dirname, "../../client/dist")));
+// app.use(express.static(path.join(__dirname, "../../client/dist")));
 // routes end points
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
@@ -43,8 +43,8 @@ app.use("/api/my-bookings", bookingRoutes);
 // app.get("*", (req: Request, res: Response) => {
 //   res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
 // });
- app.get("*", (req: Request, res: Response) => {
-   res.send("Holiday backend server is working ")
+app.get("*", (req: Request, res: Response) => {
+  res.send("Holiday backend server is working ");
 });
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
