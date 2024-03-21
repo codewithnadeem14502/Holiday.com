@@ -43,7 +43,9 @@ app.use("/api/my-bookings", bookingRoutes);
 // app.get("*", (req: Request, res: Response) => {
 //   res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
 // });
-
+ app.get("*", (req: Request, res: Response) => {
+   res.send("Holiday backend server is working ")
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
