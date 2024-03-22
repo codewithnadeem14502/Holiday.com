@@ -44,7 +44,7 @@ router.post(
       // send cookies with name,token and along with condition and maxage
       res.cookie("auth_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+       // secure: process.env.NODE_ENV === "production",
         maxAge: 86500000, // 1 day
       });
 
