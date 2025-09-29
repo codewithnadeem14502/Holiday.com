@@ -11,7 +11,7 @@ import myHotelsRoutes from "./routes/my-hotel";
 import hotelRoutes from "./routes/hotels";
 import bookingRoutes from "./routes/my-bookings";
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;;
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
