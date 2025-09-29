@@ -44,8 +44,9 @@ router.post(
       // send cookies with name,token and along with condition and maxage
       res.cookie("auth_token", token, {
         httpOnly: true,
-       // secure: process.env.NODE_ENV === "production",
-        maxAge: 86500000, // 1 day
+        secure: process.env.NODE_ENV === "production", // true in Render
+        sameSite: "none", // required for cross-site cookies
+        maxAge: 86400000,
       });
 
       res.status(200).json({ userId: user._id });
