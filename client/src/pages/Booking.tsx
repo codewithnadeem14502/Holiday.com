@@ -1,14 +1,10 @@
 import { useQuery } from "react-query";
 import * as apiClient from "../api-clients";
-import BookingForm from "../forms/BookingForm/BookingForm";
 import { useSearchContext } from "../contexts/SearchContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BookingDetailsSummary from "../components/BookingDetailsSummary";
-import { Elements } from "@stripe/react-stripe-js";
-import { useAppContext } from "../contexts/AppContext";
 const Booking = () => {
-  const { stripePromise } = useAppContext();
   const search = useSearchContext();
   const { hotelId } = useParams();
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
@@ -22,30 +18,13 @@ const Booking = () => {
     }
   }, [search.checkIn, search.checkOut]);
 
-  const { data: paymentIntentData } = useQuery(
-    "createPaymentIntent",
-    () =>
-      apiClient.createPaymentIntent(
-        hotelId as string,
-        numberOfNights.toString()
-      ),
-    {
-      enabled: !!hotelId && numberOfNights > 0,
-    }
-  );
-
   const { data: hotel } = useQuery(
     "fetchHotelById",
     () => apiClient.fetchHotelById(hotelId as string),
     {
       enabled: !!hotelId,
-    }
+    },
   );
-  const { data: currentUser } = useQuery(
-    "fetchCurrentUser",
-    apiClient.fetchCurrentUser
-  );
-  // console.log(currentUser?.email);
 
   if (!hotel) {
     return <></>;
@@ -60,19 +39,22 @@ const Booking = () => {
         numberOfNights={numberOfNights}
         hotel={hotel}
       />
-      {currentUser && paymentIntentData && (
-        <Elements
-          stripe={stripePromise}
-          options={{
-            clientSecret: paymentIntentData.clientSecret,
-          }}
-        >
-          <BookingForm
-            currentUser={currentUser}
-            paymentIntent={paymentIntentData}
-          />
-        </Elements>
-      )}
+
+      <div className="flex items-center justify-center p-6">
+        <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-6 text-center">
+          <h2 className="text-lg font-semibold text-yellow-800">
+            Payments Coming Soon 🚧
+          </h2>
+          <p className="mt-2 text-sm text-yellow-700">
+            Online payments are temporarily unavailable.
+            <br />
+            We’re currently onboarding our payment provider.
+          </p>
+          <p className="mt-1 text-sm text-yellow-700">
+            Please check back later or contact support.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

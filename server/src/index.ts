@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
-import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 import myHotelsRoutes from "./routes/my-hotel";
 import hotelRoutes from "./routes/hotels";
@@ -19,6 +18,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
+
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
   console.log("Database is connected");
 });
@@ -27,27 +27,20 @@ const app = express();
 
 // Body parsing middleware
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 // CORS middleware
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
-    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// Cookie parsing middleware
-app.use(cookieParser(process.env.COOKIE_SECRET));
 
-// Set sameSite attribute for cookies
-app.use((req, res, next) => {
-  res.cookie("sameSite", "none", {
-    sameSite: "none", // Set sameSite attribute to none for cross-domain cookies
-    secure: true, // Ensure cookies are only sent over HTTPS
-  });
-  next();
-});
+app.options("*", cors());
 
 // Routes
 app.use("/api/users", userRoutes);

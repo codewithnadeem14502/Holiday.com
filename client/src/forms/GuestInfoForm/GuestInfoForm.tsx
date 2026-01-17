@@ -50,7 +50,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       data.checkIn,
       data.checkOut,
       data.adultCount,
-      data.childCount
+      data.childCount,
     );
     navigate("/sign-in", { state: { from: location } });
   };
@@ -61,14 +61,14 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
       data.checkIn,
       data.checkOut,
       data.adultCount,
-      data.childCount
+      data.childCount,
     );
     navigate(`/hotel/${hotelId}/booking`);
   };
 
   return (
     <div className="flex flex-col p-4 bg-blue-200 gap-4">
-      <h3 className="text-md font-bold">£{pricePerNight}</h3>
+      <h3 className="text-md font-bold">₹{pricePerNight}</h3>
       <form
         onSubmit={
           isLoggedIn ? handleSubmit(onSubmit) : handleSubmit(onSignInClick)

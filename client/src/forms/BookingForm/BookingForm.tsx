@@ -3,10 +3,8 @@ import {
   PaymentIntentResponse,
   UserType,
 } from "../../../../server/src/shared/types";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { StripeCardElement } from "@stripe/stripe-js";
 import { useSearchContext } from "../../contexts/SearchContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import * as apiClient from "../../api-clients";
 import { useAppContext } from "../../contexts/AppContext";
@@ -30,25 +28,18 @@ export type BookingFormData = {
 };
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
-  const stripe = useStripe();
-  const elements = useElements();
-
   const search = useSearchContext();
   const { hotelId } = useParams<{ hotelId: string }>();
 
   const { showToast } = useAppContext();
-  const Navigate = useNavigate();
-  const { mutate: bookRoom, isLoading } = useMutation(
-    apiClient.createRoomBooking,
-    {
-      onSuccess: () => {
-        showToast({ message: "Booking Saved!", type: "SUCCESS" });
-      },
-      onError: () => {
-        showToast({ message: "Error saving booking", type: "ERROR" });
-      },
-    }
-  );
+  const { isLoading } = useMutation(apiClient.createRoomBooking, {
+    onSuccess: () => {
+      showToast({ message: "Booking Saved!", type: "SUCCESS" });
+    },
+    onError: () => {
+      showToast({ message: "Error saving booking", type: "ERROR" });
+    },
+  });
 
   const { handleSubmit, register } = useForm<BookingFormData>({
     defaultValues: {
@@ -65,51 +56,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
     },
   });
 
-  const onSubmit = async (formData: BookingFormData) => {
-    if (!stripe || !elements) {
-      return;
-    }
-
-    try {
-      const result = await stripe.confirmCardPayment(
-        paymentIntent.clientSecret,
-        {
-          payment_method: {
-            card: elements.getElement(CardElement) as StripeCardElement,
-            billing_details: {
-              name: `${formData.firstName} ${formData.lastName}`,
-              address: {
-                line1: "123 Main Street",
-                line2: "Apt 1",
-                city: "Anytown",
-                state: "State",
-                postal_code: "12345",
-                country: "US",
-              },
-            },
-          },
-        }
-      );
-
-      if (result.error) {
-        console.error(
-          "Error during payment confirmation:",
-          result.error.message
-        );
-        // Handle and display the error to the user
-        return;
-      }
-
-      if (result.paymentIntent?.status === "succeeded") {
-        console.log("Booking confirmed");
-        bookRoom({ ...formData, paymentIntentId: result.paymentIntent.id });
-        Navigate("/my-bookings");
-      }
-    } catch (error) {
-      console.error("Error confirming payment:", error);
-      // Handle and display the error to the user
-    }
-  };
+  const onSubmit = async () => {};
 
   return (
     <form
@@ -163,10 +110,6 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 
       <div className="space-y-2">
         <h3 className="text-xl font-semibold"> Payment Details</h3>
-        <CardElement
-          id="payment-element"
-          className="border rounded-md p-2 text-sm"
-        />
       </div>
 
       <div className="flex justify-end">
