@@ -86,8 +86,8 @@ export const validateToken = async () => {
 
 
 export const SignOut = async () => {
+  localStorage.removeItem("token");
   const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
-
     method: "POST",
   });
   if (!response.ok) {
