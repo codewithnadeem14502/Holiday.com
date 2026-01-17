@@ -2,7 +2,10 @@ import multer from "multer";
 
 declare global {
     namespace Express {
-        type Multer = multer.Multer;
-        type File = multer.File;
+        namespace Multer {
+            interface File extends multer.File { }
+        }
     }
 }
+
+export { };
