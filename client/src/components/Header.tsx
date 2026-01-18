@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAppContext } from "../contexts/AppContext";
 import { FaBars, FaTimes } from "react-icons/fa";
 import SignOutButton from "./SignOutButton";
-
+import { useAppContext } from "../contexts/AppContext";
+import { useMutation } from "react-query";
+import * as apiClient from "../api-clients";
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
-  const { isLoggedIn } = useAppContext();
+  const isLoggedIn = localStorage.getItem("token") == null ? false : true;
+  const { showToast } = useAppContext();
   const [showMenu, setShowMenu] = useState(false);
-
+  const mutation = useMutation(apiClient.SignOut, {
+    onSuccess: async () => {
+      showToast({ message: "Sign Out", type: "SUCCESS" });
+    },
+    onError: (error: Error) => {
+      showToast({ message: error.message, type: "ERROR" });
+    },
+  });
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
   const handleSignOut = () => {
-    // Your sign out logic here
-    console.log("Signing out...");
+    mutation.mutate();
   };
 
   return (
@@ -40,20 +48,24 @@ const Header: React.FC<HeaderProps> = () => {
         </div>
         <div className={`md:hidden ${showMenu ? "block" : "hidden"}`}>
           <div className="bg-blue-800 py-2 mt-5 ">
-            <Link
-              to="/my-booking"
-              className="block text-white px-3 py-2 font-bold hover:bg-gray-100 hover:text-blue-600"
-              onClick={toggleMenu}
-            >
-              My Bookings
-            </Link>
-            <Link
-              to="/my-hotels"
-              className="block text-white px-3 py-2 font-bold hover:bg-gray-100 hover:text-blue-600"
-              onClick={toggleMenu}
-            >
-              My Hotels
-            </Link>
+            {isLoggedIn && (
+              <>
+                <Link
+                  to="/my-booking"
+                  className="block text-white px-3 py-2 font-bold hover:bg-gray-100 hover:text-blue-600"
+                  onClick={toggleMenu}
+                >
+                  My Bookings
+                </Link>
+                <Link
+                  to="/my-hotels"
+                  className="block text-white px-3 py-2 font-bold hover:bg-gray-100 hover:text-blue-600"
+                  onClick={toggleMenu}
+                >
+                  My Hotels
+                </Link>
+              </>
+            )}
             {isLoggedIn ? (
               <button
                 onClick={() => {
@@ -90,13 +102,6 @@ const Header: React.FC<HeaderProps> = () => {
               >
                 My Hotels
               </Link>
-              {/* <button
-                onClick={handleSignOut}
-                className="flex bg-white items-center text-blue-600 px-3 font-bold rounded-lg hover:bg-gray-100"
-              >
-                Sign Out
-              
-              </button> */}
               <SignOutButton />
             </>
           ) : (
